@@ -21,5 +21,12 @@ public class Constants {
 
     public static final String FILE_OR_DIRECTORY_NOT_FOUND = "param[%s] : Le répértoire ou le fichier n'existe pas %s";
 
+    public static final String INCORRECT_ARGS = "Incorrect value for line format";
+
+    public static final String INCORRECT_COLOR = "Incorrect value for color";
+
+    public static final String INCORRECT_NUM_REF = "Incorrect value for reference number";
+
+    public static final String INCORRECT_PRICE = "Incorrect value for price";
 
 }

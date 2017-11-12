@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 /**
  * Classe utilitaire.
@@ -63,5 +64,26 @@ public class InputsValidators {
             System.out.println(String.format(Constants.FILE_OR_DIRECTORY_NOT_FOUND, 3, location));
         }
         return isLocationExists;
+    }
+
+    /**
+     * Methode permettant de verifier une couleur.
+     *
+     * @param color le code couleur.
+     * @return true si code couleur est valide, false sinon
+     */
+    public static boolean isValidColor(String color) {
+        String[] colors = new String[]{"R", "G", "B"};
+        return Arrays.asList(colors).contains(color);
+    }
+
+    /**
+     * Methode permettant de verifier une reference.
+     *
+     * @param referenceNumber la reference a verifiée.
+     * @return true si valide, false sinon
+     */
+    public static boolean isValidReferenceNumber(String referenceNumber) {
+        return StringUtils.isNumeric(referenceNumber);
     }
 }

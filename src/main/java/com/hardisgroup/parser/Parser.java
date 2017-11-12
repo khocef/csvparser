@@ -4,10 +4,10 @@ import com.hardisgroup.common.model.Error;
 import com.hardisgroup.common.model.Reference;
 import com.hardisgroup.common.model.Report;
 import com.hardisgroup.common.utils.Constants;
+import com.hardisgroup.common.utils.InputsValidators;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class Parser {
             List<Error> errors = new ArrayList<>();
 
             lines.forEach((line) -> {
-                if (isValidLine(line)) {
+                if (this.isValidLine(line)) {
                     Reference reference = new Reference(line[0], line[1], line[2], line[3]);
                     references.add(reference);
                 } else {
@@ -50,17 +50,6 @@ public class Parser {
     }
 
     /**
-     * Methode permettant de verifier une couleur.
-     *
-     * @param color le code couleur.
-     * @return true si code couleur est valide, false sinon
-     */
-    private boolean isValidColor(String color) {
-        String[] colors = new String[]{"R", "G", "B"};
-        return Arrays.asList(colors).contains(color);
-    }
-
-    /**
      * Methode permettant de verifier une ligne de données.
      *
      * @param line la ligne à vérifier.
@@ -69,10 +58,9 @@ public class Parser {
     private boolean isValidLine(String[] line) {
         return line != null &&
                 line.length == 4 &&
-                StringUtils.isNumeric(line[0]) &&
-                isValidColor(line[1]);
+                InputsValidators.isValidReferenceNumber(line[0]) &&
+                InputsValidators.isValidColor(line[1]);
     }
-
 
     /**
      * Methode permettant de construire un objet {@Error} pour une ligne erronée.
@@ -83,11 +71,24 @@ public class Parser {
      */
     private Error constructErrorMessage(String[] line, int index) {
         Error error = new Error();
+        // set the line index
         error.setLine(index);
+
+        // set the line value
         String lineString = Arrays.toString(line);
-        lineString = lineString.substring(1, line.length - 1);
+        lineString = lineString.substring(1, lineString.length() - 1);
         error.setValue(lineString);
 
+        // set the error message
+        String message = "";
+        if (line.length != 4) {
+            message = Constants.INCORRECT_ARGS;
+        } else if (!InputsValidators.isValidReferenceNumber(line[0])) {
+            message = Constants.INCORRECT_NUM_REF;
+        } else if (!InputsValidators.isValidColor(line[1])) {
+            message = Constants.INCORRECT_COLOR;
+        }
+        error.setMessage(message);
         return error;
     }
 

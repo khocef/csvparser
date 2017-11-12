@@ -1,0 +1,6 @@
+# IntelliJ ignore
+.idea/
+*.iml
+
+# ProjectIgnore
+target

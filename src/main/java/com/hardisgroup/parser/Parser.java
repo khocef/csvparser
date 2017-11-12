@@ -84,7 +84,9 @@ public class Parser {
     private Error constructErrorMessage(String[] line, int index) {
         Error error = new Error();
         error.setLine(index);
-        error.setValue(Arrays.toString(line));
+        String lineString = Arrays.toString(line);
+        lineString = lineString.substring(1, line.length - 1);
+        error.setValue(lineString);
 
         return error;
     }

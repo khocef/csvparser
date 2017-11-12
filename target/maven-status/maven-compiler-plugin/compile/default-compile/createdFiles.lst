@@ -1,0 +1,5 @@
+com\hardisgroup\common\model\utils\Utils.class
+com\hardisgroup\mapper\Mapper.class
+com\hardisgroup\Main.class
+com\hardisgroup\common\model\Reference.class
+com\hardisgroup\parser\Parser.class
